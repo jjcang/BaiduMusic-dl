@@ -1,7 +1,15 @@
 ## About ##
 
+BaiduMusic-dl
+=============
+
 Download high quality music from music.baidu.com
-*脚本目前失效了* 百度加了监测机制，等我来想办法。
+copy from  https://github.com/alswl/tingdownload
+
+增加了登陆Baidu音乐功能，用户（注册账号）首先在百度音乐上选择开通vip试用一个月，然后可以下载高码率音乐320kbps或者192kbps，默认下载最高码率，如果不存在则下载低码率。没有开通vip用户，下载的是低码率128kbps。
+
+详情请看https://github.com/alswl/tingdownload
+===================================================================
 
 度娘终于干了一件好事，[Baidu Ting](http://ting.baidu.com)上线了，
 正版音乐免费下载，类似于[谷歌音乐](http://www.google.cn/music)。
@@ -11,18 +19,6 @@ Download high quality music from music.baidu.com
 
 Baidu Ting的音乐质量是128KBps，音质算好，里面的idv3信息也勉强可以，有:
 
-* 歌名
-* 歌手
-* 部分专辑名（偶尔也出现“201-8月新歌快递”这种比较山寨的字）
-* 部分唱片封面图片
-
-虽然比不上谷歌音乐连歌曲风格都准备好了，但是比杂乱无章的那些音乐mp3要好太多了。
-
-## Download ##
-
-早上下了几首音乐，就顺手写了一个脚本，用来批量从Badu Ting下载音乐。
-
-代码在[github-tingdownload](https://github.com/alswl/tingdownload)
 
 ## Requirement ##
 
@@ -43,18 +39,21 @@ Baidu Ting的音乐质量是128KBps，音质算好，里面的idv3信息也勉�
     
     A script to download music from ting.baidu.com.
     
-    positional arguments:
-      Keyword
-    
-    optional arguments:
-      -h, --help            show this help message and exit
-      -a, --auto_match      auto match first song
-      --input INPUT, -i INPUT
-                            a list file to input musics
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -i INPUT, --input INPUT
+							a list file to input musics
+	  -u USERNAME, --username USERNAME
+							Your Baidu Username
+	  -p PASSWORD, --password PASSWORD
+							Your Baidu password
+	  -q [RATE], --rate [RATE]
+							Music rate and
+							quality,l:low,128,m:middle,192,h:high,320
 
 示例：
 
-    python tingdownload.py 老男孩 #单个文件下载
+    python tingdownload.py -u vonnyfly -p ****** -q h老男孩 #单个文件下载，高码率
     ./tingdownload.py 老男孩 #单个文件下载（给python文件加上可执行权限）
     python tingdownload.py 老男孩 Raise\n Me\n Up # 多文件名，如果有空格，请记得加上空格反转'\n'
 
@@ -168,10 +167,5 @@ Nickelback  Don't Ever Let It End
 
 Enjoy it.
 
-Powered by [@alswl](http://log4d.com)
 
-<!--vim: set ft=markdown expandtab nosmartindent:-->
-=======
-BaiduMusic-dl
-=============
 

@@ -252,83 +252,63 @@ def printDelimiter():
 # main function to emulate login baidu
 def emulateLoginBaidu(username,password):
     printDelimiter();
- 
-#    # parse input parameters
-#    parser = optparse.OptionParser();
-#    parser.add_option("-u","--username",action="store",type="string",default='',dest="username",help="Your Baidu Username");
-#    parser.add_option("-p","--password",action="store",type="string",default='',dest="password",help="Your Baidu password");
-#    (options, args) = parser.parse_args();
-#    # export all options variables, then later variables can be used
-#    for i in dir(options):
-##        print i + " = options." + i
-#        exec(i + " = options." + i);
- 
-    print "[preparation] using cookieJar & HTTPCookieProcessor to automatically handle cookies";
-    printDelimiter();
-    print "[step1] to get cookie BAIDUID";
-    baiduMainUrl = "http://www.baidu.com/";
-    resp = urllib2.urlopen(baiduMainUrl);
-    #respInfo = resp.info();
-    #print "respInfo=",respInfo;
-#    for index, cookie in enumerate(cj):
-#        print '[',index, ']',cookie;
- 
-    printDelimiter();
-    print "[step2] to get token value";
-    getapiUrl = "https://passport.baidu.com/v2/api/?getapi&class=login&tpl=mn&tangram=true";
-    getapiResp = urllib2.urlopen(getapiUrl);
-    #print "getapiResp=",getapiResp;
-    getapiRespHtml = getapiResp.read();
-    #print "getapiRespHtml=",getapiRespHtml;
-    #bdPass.api.params.login_token='5ab690978812b0e7fbbe1bfc267b90b3';
-    foundTokenVal = re.search("bdPass\.api\.params\.login_token='(?P<tokenVal>\w+)';", getapiRespHtml);
-    if(foundTokenVal):
-        tokenVal = foundTokenVal.group("tokenVal");
-        print "tokenVal=",tokenVal;
- 
+    try:
+        print "[preparation] using cookieJar & HTTPCookieProcessor to automatically handle cookies";
         printDelimiter();
-        print "[step3] emulate login baidu";
-#        staticpage = "http://www.baidu.com/cache/user/html/jump.html";
-        staticpage = 'http://music.baidu.com/static/html/pass_jump.html'
-        baiduMainLoginUrl = "https://passport.baidu.com/v2/api/?login";
-        postDict = {
-            #'ppui_logintime': "",
-            'charset'       : "utf-8",
-            #'codestring'    : "",
-            'token'         : tokenVal, #de3dbf1e8596642fa2ddf2921cd6257f
-            'isPhone'       : "false",
-            'index'         : "0",
-            #'u'             : "",
-            #'safeflg'       : "0",
-            'staticpage'    : staticpage, #http%3A%2F%2Fwww.baidu.com%2Fcache%2Fuser%2Fhtml%2Fjump.html
-            'loginType'     : "1",
-            'tpl'           : "mn",
-            'callback'      : "parent.bdPass.api.login._postCallback",
-            'username'      : username,
-            'password'      : password,
-            #'verifycode'    : "",
-            'mem_pass'      : "on",
-        };
-        postData = urllib.urlencode(postDict);
-        # here will automatically encode values of parameters
-        # such as:
-        # encode http://www.baidu.com/cache/user/html/jump.html into http%3A%2F%2Fwww.baidu.com%2Fcache%2Fuser%2Fhtml%2Fjump.html
-        #print "postData=",postData;
-        req = urllib2.Request(baiduMainLoginUrl, postData);
-        # in most case, for do POST request, the content-type, is application/x-www-form-urlencoded
-        req.add_header('Content-Type', "application/x-www-form-urlencoded");
-        resp = urllib2.urlopen(req);
-#        for index, cookie in enumerate(cj):
-#            print '[',index, ']',cookie;
-        cookiesToCheck = ['BDUSS', 'PTOKEN', 'STOKEN', 'SAVEUSERID'];
-        loginBaiduOK = checkAllCookiesExist(cookiesToCheck, cj);
-        if(loginBaiduOK):
-            print "+++ Emulate login baidu is OK, ^_^";
+        print "[step1] to get cookie BAIDUID";
+        baiduMainUrl = "http://www.baidu.com/";
+        resp = urllib2.urlopen(baiduMainUrl);
+        
+        printDelimiter();
+        print "[step2] to get token value";
+        getapiUrl = "https://passport.baidu.com/v2/api/?getapi&class=login&tpl=mn&tangram=true";
+        getapiResp = urllib2.urlopen(getapiUrl);
+        #print "getapiResp=",getapiResp;
+        getapiRespHtml = getapiResp.read();
+        #print "getapiRespHtml=",getapiRespHtml;
+        #bdPass.api.params.login_token='5ab690978812b0e7fbbe1bfc267b90b3';
+        foundTokenVal = re.search("bdPass\.api\.params\.login_token='(?P<tokenVal>\w+)';", getapiRespHtml);
+        if(foundTokenVal):
+        	tokenVal = foundTokenVal.group("tokenVal");
+        	print "tokenVal=",tokenVal;
+        
+        	printDelimiter();
+        	print "[step3] emulate login baidu";
+        	staticpage = 'http://music.baidu.com/static/html/pass_jump.html'
+        	baiduMainLoginUrl = "https://passport.baidu.com/v2/api/?login";
+        	postDict = {
+        		#'ppui_logintime': "",
+        		'charset'       : "utf-8",
+        		#'codestring'    : "",
+        		'token'         : tokenVal, #de3dbf1e8596642fa2ddf2921cd6257f
+        		'isPhone'       : "false",
+        		'index'         : "0",
+        		#'u'             : "",
+        		#'safeflg'       : "0",
+        		'staticpage'    : staticpage, #http%3A%2F%2Fwww.baidu.com%2Fcache%2Fuser%2Fhtml%2Fjump.html
+        		'loginType'     : "1",
+        		'tpl'           : "mn",
+        		'callback'      : "parent.bdPass.api.login._postCallback",
+        		'username'      : username,
+        		'password'      : password,
+        		#'verifycode'    : "",
+        		'mem_pass'      : "on",
+        	};
+        	postData = urllib.urlencode(postDict);
+        	req = urllib2.Request(baiduMainLoginUrl, postData);
+        	req.add_header('Content-Type', "application/x-www-form-urlencoded");
+        	resp = urllib2.urlopen(req);
+        	cookiesToCheck = ['BDUSS', 'PTOKEN', 'STOKEN', 'SAVEUSERID'];
+        	loginBaiduOK = checkAllCookiesExist(cookiesToCheck, cj);
+        	if(loginBaiduOK):
+        		print "+++ Emulate login baidu is OK, ^_^";
+        	else:
+        		print "--- Failed to emulate login baidu !"
         else:
-            print "--- Failed to emulate login baidu !"
-    else:
-        print "Fail to extract token value from html=",getapiRespHtml;
-
+        	print "Fail to extract token value from html=",getapiRespHtml;
+    except:
+        print "[-]system exception"
+		
 def main():
     # prepare args
     parser = argparse.ArgumentParser(
