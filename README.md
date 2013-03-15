@@ -72,7 +72,7 @@ Baidu Ting的音乐质量是128KBps，音质算好，里面的idv3信息也勉�
 
 将这个list文件作为输入传入执行脚本：
 
-    python2.7 tingdownload.py --input ~/music.txt
+    python2.7 tingdownload.py -u <UserName> -p <PASSWORD> --input ~/music.txt
 
 运行结果如下，列出四种情况：
 
